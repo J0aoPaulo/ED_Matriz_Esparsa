@@ -8,6 +8,7 @@
 
 
 // > Classe Node.h criada em 29/05 por Hermeson Bastos
+// > Classe Node.h finalizada em 30/05 por Hermeson Bastos
 //
 // PONTOS INPORTANTES:
 //      - A estrutra do projeto foi criada com base nas
