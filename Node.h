@@ -6,21 +6,11 @@
 //-------------------------------------------------------------//
 
 
-
-// > Classe Node.h criada em 29/05 por Hermeson Bastos
-// > Classe Node.h finalizada em 30/05 por Hermeson Bastos
-//
-// PONTOS INPORTANTES:
-//      - A estrutra do projeto foi criada com base nas
-//        atividades anteriores de listas simplesmente 
-//        encadeadas e na motivação do problema         
-//        disponibilizado pelo professor no Moodle.
-
-
 #ifndef NODE_H
 #define NODE_H
 class Node {
 
+    friend SparseMatrix;
     private:
         Node *direita; // ponteiro para o nó à direita
         Node *abaixo; // ponteiro para o nó abaixo
@@ -35,7 +25,15 @@ class Node {
             abaixo = down;
             linha = l;
             coluna = c;
-        };
+        }
+
+        // Quando for o nó cabeça ou sentinela
+        Node(Node *right = nullptr, Node *down = nullptr, int l, int c){
+            direita = right;
+            abaixo = down;
+            linha = l;
+            coluna = c;
+        }
 };
 
 
