@@ -79,31 +79,63 @@ class SparseMatrix {
                     }
                 }
 
-                Node *exists = auxl->direita;
-                for(int at = 1; at <= n_col; at++){
-                    if(exists->coluna == j){
-                        exists->valor = value;
+                if(auxl->direita == auxl){ // quando a linha está vazia
+                    if(auxc->abaixo == auxc){ // e quando a coluna
+                        auxl->direita = new Node(value, auxl, auxc, i, j);
+                        auxc->abaixo = auxl->direita;
                     } else {
-                        exists = exists->direita;
+                        Node *atual = auxc;
+                        for(int at = 0; at <= n_lin; at++){
+                            if((i > atual->linha && i < atual->abaixo->linha) || atual->abaixo->linha == 0){
+                                Node* novo = new Node(value, atual->abaixo, auxl, i, j);
+                                auxl->direita = novo;
+                                atual->abaixo = novo;
+                                break;
+                            } else {
+                                atual = atual->abaixo;
+                            }
+                        }
+                    }
+                } else { // quando a linha possui pelo menos um nó
+                    if(auxc->abaixo == auxc){
+                        Node *atual = auxl;
+                        for(int at = 0; at <= n_col; at++){
+                            if((j > atual->coluna && j < atual->direita->coluna) || atual->direita->coluna == 0){
+                                Node* novo = new Node(value, atual->direita, auxc, i, j);
+                                auxc->abaixo = novo;
+                                atual->direita = novo;
+                                break;
+                            } else {
+                                atual = atual->direita;
+                            }
+                        }
+                    } else {
+                        Node *atual_linha = auxl;
+                        Node *anterior = nullptr;
+                        for(int at = 0; at <= n_col; at++){
+                            if(atual_linha->coluna < j){
+                                anterior = atual_linha;
+                                atual_linha = atual_linha->direita;
+                            } else if(atual_linha->coluna == j){
+                                atual_linha->valor = value;
+                                break;
+                            } else { 
+                                Node *atual_coluna = auxc;
+                                for(int at = 0; at <= i; at++){
+                                    if(atual_coluna->abaixo->linha < i){ // se o nó após o atual_coluna é menor do que i
+                                        atual_coluna = atual_coluna->abaixo;
+                                    } else {
+                                        break;
+                                    }
+                                }
+
+                                Node *novo = new Node(value, atual_linha, atual_coluna->abaixo, i, j);
+                                anterior->direita = novo;
+                                atual_coluna->abaixo = novo;
+                            }
+                        }
                     }
                 }
-
-                
-
-                if(auxl->direita == auxl){
-                    if(auxc->abaixo == auxc){
-
-                    } else {
-
-                    }
-                } else {
-                    if(auxc->abaixo == auxc){
-
-                    } else {
-
-                    }
-                }
-
 
                 // quando o nó já existe
                 
