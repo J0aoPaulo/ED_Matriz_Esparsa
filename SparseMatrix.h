@@ -55,7 +55,25 @@ class SparseMatrix {
         }
 
         // Destrutor
-        ~SparseMatrix();
+        ~SparseMatrix(){
+            Node* auxl = m_head->abaixo;
+
+            while (auxl != m_head) {
+                Node* current = auxl->direita; // Primeiro nó na linha (excluindo o nó cabeça)
+            // Percorra cada nó na linha e delete-o
+                while (current != auxl) {
+                    Node* next = current->direita;
+                    delete current;
+                    current = next;
+                }
+
+                Node* nextLine = auxl->abaixo; // Próxima linha
+                delete auxl; // Delete o nó cabeça da linha atual
+                auxl = nextLine;
+            }
+
+            delete m_head; // Delete o nó cabeça da m
+        };
 
         // Insere um valor na SparseMatrix
         // - Recebe a linha(i) e a coluna (j) junto do valor(value) a ser inserido na determinada posição
