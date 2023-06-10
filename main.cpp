@@ -45,7 +45,7 @@ SparseMatrix* sum(SparseMatrix* A, SparseMatrix* B) {
       }
    } else {
       std::cout << "*Nao eh permitido a soma de duas matrizes de tamanhos diferentes*";
-      std::cout <<  "Dica: Se voce tentar somar duas matrizes esparsas de tamanhos diferentes, nao havera uma correspondencia exata entre os elementos das matrizes. As dimensoes diferentes implicam que nao ha elementos correspondentes em todas as posicoes. Portanto, a operacao de soma nao faz sentido nesse contexto.";
+      std::cout << "Dica: Se voce tentar somar duas matrizes esparsas de tamanhos diferentes, nao havera uma correspondencia exata entre os elementos das matrizes. As dimensoes diferentes implicam que nao ha elementos correspondentes em todas as posicoes. Portanto, a operacao de soma nao faz sentido nesse contexto.";
       return nullptr;
    }
    return sumMatrix;
@@ -74,7 +74,7 @@ int main() {
       std::cout << "3. Imprimir matriz(es).\n";
       std::cout << "4. Somar matrizes.\n";
       std::cout << "5. Multiplicar matrizes. *em andamento*\n";
-      std::cout << "6. Sair. *digite 4 para sair*\n";
+      std::cout << "6. Sair. *digite 5 para sair*\n";
       std::cout << "digite sua resposta: ";
       std::cin >> resposta;
 
@@ -181,10 +181,12 @@ int main() {
                matrizSomada->print();
             }
          }
+         case 5: {
+            break;
+         }
       }
    }
 }
-
 // SparseMatrix* matrizLida = readSparseMatrix("matrix.txt");
             // matrizLida->print();
             // break;
