@@ -9,10 +9,9 @@
 #include "SparseMatrix.h"
 #include <fstream>
 #include <vector>
-#include <sstream>
 
-SparseMatrix* readSparseMatrix(std::string matrix) {
-   std::ifstream input_arquivo("matrix.txt");
+SparseMatrix* readSparseMatrix(const std::string& arquivo_matrix) {
+   std::ifstream input_arquivo(arquivo_matrix);
 
    if(!input_arquivo.is_open()) {
       std::cout << "Erro ao abrir o arquivo de entrada, tente novamente." << std::endl;
@@ -24,7 +23,8 @@ SparseMatrix* readSparseMatrix(std::string matrix) {
 
    SparseMatrix* read_matrix = new SparseMatrix(numLin, numCol);
 
-   int lin, col, value;
+   int lin, col;
+   double value;
    while (input_arquivo >> lin >> col >> value) {
       read_matrix->insert(lin, col, value);
    }
@@ -32,6 +32,23 @@ SparseMatrix* readSparseMatrix(std::string matrix) {
    input_arquivo.close();
 
    return read_matrix;
+}
+
+SparseMatrix* sum(SparseMatrix* A, SparseMatrix* B) {
+   SparseMatrix* sumMatrix = new SparseMatrix(A->getLin(), A->getCol());
+
+   if(A->getLin() == B->getLin() && A->getCol() == B->getCol()) {
+      for (int i = 1; i <= A->getLin(); i++) {
+         for (int j = 1; j <= B->getCol(); j++) {
+            sumMatrix->insert(i, j, A->get(i, j) + B->get(i, j));
+         }
+      }
+   } else {
+      std::cout << "*Nao eh permitido a soma de duas matrizes de tamanhos diferentes*";
+      std::cout <<  "Dica: Se voce tentar somar duas matrizes esparsas de tamanhos diferentes, nao havera uma correspondencia exata entre os elementos das matrizes. As dimensoes diferentes implicam que nao ha elementos correspondentes em todas as posicoes. Portanto, a operacao de soma nao faz sentido nesse contexto.";
+      return nullptr;
+   }
+   return sumMatrix;
 }
 
 std::string matrixExist(std::vector<SparseMatrix*> vector_matrix) {
@@ -55,14 +72,13 @@ int main() {
       std::cout << "1. Criar uma matriz.\n";
       std::cout << "2. Inserir elementos na sua matriz.\n";
       std::cout << "3. Imprimir matriz(es).\n";
-      std::cout << "4. Somar matrizes. em andamento\n";
-      std::cout << "5. Multiplicar matrizes. em andamento\n";
-      std::cout << "6. Sair. digite 4 para sair\n";
+      std::cout << "4. Somar matrizes.\n";
+      std::cout << "5. Multiplicar matrizes. *em andamento*\n";
+      std::cout << "6. Sair. *digite 4 para sair*\n";
       std::cout << "digite sua resposta: ";
       std::cin >> resposta;
 
       switch (resposta) {
-         // criar matriz
          case 1: {
             int numLin, numCol;
             cout << "\nInforme o numero de linhas da sua matriz: ";
@@ -77,12 +93,10 @@ int main() {
             }
             SparseMatrix *sparseMatrix = new SparseMatrix(numLin, numCol);
             vec_matrix.push_back(sparseMatrix);
-            // delete sparseMatrix;
 
             cout << "\n--- Matriz criada com sucesso! ---\n";
             break;
          }
-         // inserir elemento especifico
          case 2: {
             try { // captura de exceção
                std::cout << matrixExist(vec_matrix);
@@ -104,7 +118,6 @@ int main() {
             it++; // pode ser melhorado || quebra galho
             break;
          }
-         // imprimir matriz
          case 3: {
             try { // captura de exceção
                std::cout << matrixExist(vec_matrix);
@@ -146,6 +159,32 @@ int main() {
             } else 
                break;
          }
+         case 4: {
+            try { // captura de exceção
+               std::cout << matrixExist(vec_matrix);
+            } catch(const std::runtime_error& e) {
+               std::cout << e.what() << std::endl; // descricao da exceção
+               break; // Interrompe o case 3 se a matriz não existir
+            }
+
+            int indexM1, indexM2;
+            std::cout << "\n--- Escolha as matrizes que deseja somar ---\n";
+            std::cout << "Matriz 01: ";
+            cin >> indexM1;
+            indexM1--;
+            std::cout << "\nMatriz 02: ";
+            std::cin >> indexM2;
+            indexM2--;
+            SparseMatrix* matrizSomada = sum(vec_matrix[indexM1], vec_matrix[indexM2]);
+            if(matrizSomada != nullptr) {
+               std::cout << "\n";
+               matrizSomada->print();
+            }
+         }
       }
    }
 }
+
+// SparseMatrix* matrizLida = readSparseMatrix("matrix.txt");
+            // matrizLida->print();
+            // break;
