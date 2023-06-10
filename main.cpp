@@ -49,7 +49,7 @@ int main() {
    int it = 0; // pode melhorar 
    
    int resposta;
-   while (resposta != 5) {
+   while (resposta != 4) {
       std::cout << "\n ------ Menu de criacao e manipulacao de Matriz Esparsa ------\n";
       std::cout << "\n ----- Selecione uma das alternativas abaixo -----\n";
       std::cout << "1. Criar uma matriz.\n";
@@ -133,7 +133,7 @@ int main() {
                   std::cout << "\n";
                   vec_matrix[escolha]->print();
                } else {
-                  std::cout << "Matriz invalida ou inexistente.\n";
+                  std::cout << "*Matriz invalida ou inexistente.*\n";
                }
                break;
             } else if(x == 2) { 
@@ -145,14 +145,6 @@ int main() {
                break;
             } else 
                break;
-         }
-
-         case 4: {
-            for(int i = 0; i < vec_matrix.size(); i++){
-               vec_matrix[i]->~SparseMatrix();
-               delete vec_matrix[i];
-            }
-            break;
          }
       }
    }
