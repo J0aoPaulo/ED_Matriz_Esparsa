@@ -82,7 +82,31 @@ int main() {
             break;
          }
          case 3: {
-            vec_matrix[0]->print();
+            vec_matrix[0]->insert(3, 3, 9); //
+            vec_matrix[0]->insert(2, 4, 9); //
+            vec_matrix[0]->insert(1, 3, 9); //
+            vec_matrix[0]->insert(1, 1, 9); //
+            vec_matrix[0]->insert(1, 2, 9); //
+            vec_matrix[0]->insert(2, 3, 0); //
+            vec_matrix[0]->insert(3, 4, 9); //
+            vec_matrix[0]->insert(3, 2, 9); //
+            vec_matrix[0]->insert(1, 4, 9); //
+            vec_matrix[0]->insert(2, 1, 9); //
+            vec_matrix[0]->insert(2, 2, 9); //
+            vec_matrix[0]->insert(3, 1, 9); //
+
+            cout << vec_matrix[0]->get(1, 1);
+            cout << vec_matrix[0]->get(1, 2); //
+            cout << vec_matrix[0]->get(1, 3); //
+            cout << vec_matrix[0]->get(1, 4) << endl; //
+            cout << vec_matrix[0]->get(2, 1); //
+            cout << vec_matrix[0]->get(2, 2); //
+            cout << vec_matrix[0]->get(2, 3);
+            cout << vec_matrix[0]->get(2, 4) << endl;
+            cout << vec_matrix[0]->get(3, 1); //
+            cout << vec_matrix[0]->get(3, 2); //
+            cout << vec_matrix[0]->get(3, 3); //
+            cout << vec_matrix[0]->get(3, 4); //
          }
       }
    }

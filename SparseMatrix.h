@@ -103,6 +103,7 @@ class SparseMatrix {
                     }
                 } else { // quando a linha possui pelo menos um nó
                     if(auxc->abaixo == auxc){
+
                         Node *atual = auxl;
                         for(int at = 0; at <= n_col; at++){ // percorre o sentinela ao último nó, ou seja, de 0 ao tamanho
                             if((j > atual->coluna && j < atual->direita->coluna) || atual->direita->coluna == 0){
@@ -114,32 +115,19 @@ class SparseMatrix {
                                 atual = atual->direita;
                             }
                         }
+
                     } else {
-                        Node *atual_linha = auxl->direita; // começa no primeiro nó da linha
-                        Node *anterior = auxl; // o nó anterior é o sentinela
-                        bool encontrouColuna = false;
-
-                        while (atual_linha != auxl) { // percorre os nós da linha até voltar ao sentinela
-                            if (atual_linha->coluna == j) { // nó com a coluna encontrada
-                                atual_linha->valor = value;
-                                encontrouColuna = true;
-                                break;
-                            } else if (atual_linha->coluna > j) { // insere antes do nó atual
-                                Node *novo = new Node(value, atual_linha, atual_linha->abaixo, i, j);
-                                anterior->direita = novo;
-                                atual_linha->abaixo = novo;
-                                encontrouColuna = true;
-                                break;
-                            }
-                            anterior = atual_linha;
-                            atual_linha = atual_linha->direita;
+                        while (auxl->direita->coluna < j && auxl->direita->coluna != 0) {
+                            auxl = auxl->direita;
                         }
 
-                        if (!encontrouColuna) { // insere no final da linha
-                            Node *novo = new Node(value, auxl, auxc, i, j);
-                            anterior->direita = novo;
-                            auxc->abaixo = novo;
+                        while (auxc->abaixo->linha < i && auxc->abaixo->linha != 0) {
+                            auxc = auxc->abaixo;
                         }
+                        
+                        Node* novo = new Node(value, auxl->direita, auxc->abaixo, i, j);
+                        auxl->direita = novo;
+                        auxc->abaixo = novo;
                     }
                 }
 
